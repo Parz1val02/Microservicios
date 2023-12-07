@@ -26,21 +26,7 @@
 ##### RestTemplate vs. Feign
 - *RestTemplate*: libreria nativa de Spring para consumir web services. Se indica la ruta exacta de la ubicacion del web service (ip:puerto): `http://localhost:8080/teleco`
 	- Es posible migrar RestTemplate a usar name en vez de una url con un builder
-	- En la clase builder
-```java
-@Bean
-@LoadBalanced
-```
 - *Feign*: libreria creada por Netflix que posee una forma mas desacoplada de consumir web services utilizando name en vez de url
-	- Para configurar feign, agregar en la clase principal
-	```java
-	@EnableFeignClients
-	//Con esto se indica que se tiene un cliente feign que consume
-```
-	 - En la interfaz de feign
-  ```java
-  @FeignClient(name="nombre")
-  ```
 	- El nombre debe coincidir con el spring application name del servicio que se quiere consumir
  ---
 ## Componentes de una arquitectura de microservicios
@@ -61,10 +47,6 @@
 	`eureka.client.register-with-eureka=false`
 - No obtener la ubicacion de cada servicio de cache, es decir, cuando se vuelve a activar un servicio previamente registrado, Eureka puede obtener su ubicacion de la cache que ha guardado u obtener con discovery
 	`eureka.client.fetch-registry=false`
-- Para configurar el servidor, agregar en la clase principal
-	```java
-	@EnableEurekaServer
-```
 ##### Clientes Eureka
 - Cada servicio se registra al prenderse como un eureka client y registra su ip y puerto. Al apagarse, no se desregistra
 	`eureka.client.service-url.defaultzone=http://localhost:8761/eureka`
