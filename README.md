@@ -42,20 +42,20 @@
 ##### Eureka server
 - Es importante levantar los servicios en orden. Primero el eureka, luego el gateway (se registra con eureka), finalmente los servicios genericos
 - Puerto por defecto: 8761
-	`server.port=8761`
+	- `server.port=8761`
 - Se debe evitar el registro de eureka consigo mismo (esta funcionalidad puede ser util cuando se tienen multiples servidores discovery y se desea hacer balanceo de carga entre ellos)
-	`eureka.client.register-with-eureka=false`
+	- `eureka.client.register-with-eureka=false`
 - No obtener la ubicacion de cada servicio de cache, es decir, cuando se vuelve a activar un servicio previamente registrado, Eureka puede obtener su ubicacion de la cache que ha guardado u obtener con discovery
-	`eureka.client.fetch-registry=false`
+	- `eureka.client.fetch-registry=false`
 ##### Clientes Eureka
 - Cada servicio se registra al prenderse como un eureka client y registra su ip y puerto. Al apagarse, no se desregistra
-	`eureka.client.service-url.defaultzone=http://localhost:8761/eureka`
+	- `eureka.client.service-url.defaultzone=http://localhost:8761/eureka`
 - Cada cliente de eureka manda un heartbeat cada 30 segundos para anunciar su correcto funcionamiento. Cuando Eureka deja de recibir 3 heartbeats seguidos de algun servicio, asume que se ha caido el servicio
 - Nombre para poder registrarlo junto con su socket. Cada servicio debe contar con un nombre que el servidor Eureka pueda guardar, incluido el mismo Eureka
-	`spring.application.name=nombre`
+	- `spring.application.name=nombre`
 - Permite un balanceo de carga basico, round robin. Al tener mas de un servicio registrado con el mismo nombre, se ejecuta este balanceo de carga. 
 	- Identificador unico para que Eureka puede diferenciar a servicios con el mismo nombre
-		`eureka.instance.instance-id=${spring.cloud.client.hostname}:${spring.application.name}:${random.int}`
+		- `eureka.instance.instance-id=${spring.cloud.client.hostname}:${spring.application.name}:${random.int}`
 	- Al caerse uno de los servicios, se debe esperar alrededor de minuto y medio para que Eureka pueda darse cuenta y el balanceo de carga no genere errores
 - El ecosistema no se ve limitado a solo el uso de java. La ventaja de la arquitectura de microservicios es la indepdencia en cuanto al lenguaje de programacion usado
 
